@@ -11,10 +11,12 @@
 wer alles nötige bei sich im haus haben will kann die installationsquellen seiner bevorzugten linux-enterprise-distribution sowie das okd-quell-repository bei sich einlagern. das ist noch einige meter von einer fully-airgapped-installation entfernt, aber immerhin ein anfang.
 
 am beispiel rockylinux (cronjob):
+```
 rsync -a --delete-after rsync://centos.anexia.at/epel/9/Everything/x86_64/* /var/www/pxe/epel9/
 rsync -a --delete-after rsync://rockylinux.anexia.at/rockylinux/9/BaseOS/x86_64/os/* /data/www/pxe/rockylinux9/BaseOS/x86_64/os
 rsync -a --delete-after rsync://rockylinux.anexia.at/rockylinux/9/AppStream/x86_64/os/* /data/www/pxe/rockylinux9/AppStream/x86_64/os
 rsync -a --delete-after rsync://rockylinux.anexia.at/rockylinux/9/CRB/x86_64/os/* /data/www/pxe/rockylinux9/CRB/x86_64/os
+```
 
 genug speicherplatz bereitstellen!
 
