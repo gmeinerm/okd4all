@@ -27,18 +27,24 @@ für die einlagerung der okd-images wird eine einfache image-registry benötigt.
 auch hier gilt: genug speicherplatz bereitstellen!
 
 als nächstes den oc client und das oc-mirror-plugin besorgen:
+```
 https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz
 https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
-
+```
 
 in den files dieses projekts liegt ein entsprechendes script zum download und einlagern der installationsimages, konkret der version okd4.15. TODO: auf oc-mirror v2 umstellen
 
 dieses script extrahiert den openshift-installer. dieser (und NUR dieser) ist bei allen weiteren schritten zu verwenden.
 
-überprüfen mit "./openshift-installer version"
+überprüfen mit 
+```
+"./openshift-installer version"
+```
 
 benötigte fedora-coreos-version eruieren mit:
+```
 ./openshift-install coreos print-stream-json | grep -Eo '"https.*(kernel-|initramfs.|rootfs.)\w+(.img)?"'
+```
 
 und download starten. kernel und initramdisk ins tftproot, das live-image vorzugsweise ins webroot.
 
@@ -69,22 +75,22 @@ die beiliegende ansible-rolle besteht aus schnell und einfach zusammengebastelte
 als vorarbeit ist das cluster-inventory den eigenen bedürfnissen anzupassen und der extrahierte openshift-installer in das "installer"-unterverzeichnis zu legen sowie die j2-template für die grub-files den eigenen gegebenheit anzugleichen (pfade, filenamen, etc.). in den groupvars sind die basiseinstellungen des clusters sowie die lokale hilfs-infrastruktur zu konfigurieren.
 
 wir starten damit, die pxe-bootfiles zu generieren:
-
+```
 ansible-playbook cluster.yml -t grubfiles
-
+```
 und im anschluss die installation des clusters zu initialisieren:
-
+```
 ansible-playbook cluster.yml -t installer
-
+```
 daraufhin können etwaige physiken in die pxe-umgebung gestartet werden, oder im fall von proxmox-vms diese von ansible erstellt werden mit:
-
+```
 ansible-playbook cluster.yml -t createvms
-
+```
 der rest kommt direkt aus der dokumentation:
-
+```
 ./openshift-install wait-for bootstrap-complete --log-level=debug
 ./openshift-install wait-for install-complete --log-level=debug
-
+```
 
 
 
