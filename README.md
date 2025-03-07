@@ -26,6 +26,8 @@ für die einlagerung der okd-images wird eine einfache image-registry benötigt.
 
 auch hier gilt: genug speicherplatz bereitstellen!
 
+nicht vergessen: das generierte ca-zertifikat gehört in die groupvars des cluster-inventories, damit der neu entstehende cluster der mirror-registry auch vertraut.
+
 als nächstes den oc client und das oc-mirror-plugin besorgen:
 ```
 https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz
