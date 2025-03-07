@@ -1,0 +1,7 @@
+set timeout=5
+menuentry 'Install {{ hostvars[item].inventory_hostname_short }}' {
+    linuxefi boot/fcos/fcos-vmlinuz ip={{ hostvars[item].ipaddress }}::{{ gateway }}:{{ netmask }}:{{ hostvars[item].inventory_hostname_short }}.{{ basedomain }}:{{ hostvars[item].ifname }}:none nameserver={{ nameserver }} coreos.inst.install_dev=/dev/{{ hostvars[item].diskname }} coreos.live.rootfs_url={{ ignitionurl }}fcos_rootfs.img coreos.inst.ignition_url={{ ignitionurl }}{{hostvars[item].role}}.ign
+    initrdefi boot/fcos/fcos-initramfs.img
+}
+
+

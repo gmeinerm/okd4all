@@ -1,0 +1,12 @@
+---
+
+- name: cluster
+  hosts:
+    - 192.168.10.109
+
+
+  gather_facts: no
+  remote_user: root
+
+  roles:
+    - cluster

@@ -1,0 +1,34 @@
+---
+
+- name: cleanup installer-directory
+  ansible.builtin.file:
+    path: "{{ playbook_dir }}/installer/{{ item }}"
+    state: absent
+  with_items:
+    - auth
+    - manifests
+    - openshift
+    - bootstrap.ign
+    - master.ign
+    - worker.ign
+    - install-config.yaml.backup
+    - install-config.yaml
+    - .openshift_install.log
+    - .openshift_install_state.json
+
+- name: create install-config
+  ansible.builtin.template:
+    src: install-config.yaml.j2
+    dest: "{{ playbook_dir }}/installer/install-config.yaml"
+
+- name: create backup of the install-config for debugging
+  shell: "cp {{ playbook_dir }}/installer/install-config.yaml {{ playbook_dir }}/installer/install-config.yaml.backup"
+
+- name: create manifests
+  shell: "{{ playbook_dir }}/installer/openshift-install create manifests  --dir {{ playbook_dir }}/installer"
+
+- name: create ignition configs
+  shell: "{{ playbook_dir }}/installer/openshift-install create ignition-configs --dir {{ playbook_dir }}/installer ; chmod 755 {{ playbook_dir }}/installer/*.ign"
+
+- name: move ignition-files to webroot-folder
+  shell: "scp {{ playbook_dir }}/installer/*.ign {{ ignitionuser }}@{{ ignitionhost }}:{{ ignitionpath }}"

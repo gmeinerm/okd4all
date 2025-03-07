@@ -1,0 +1,11 @@
+insmod all_video
+
+set menu_color_highlight=cyan/black
+set menu_color_normal=white/black
+set color_normal=white/black
+
+
+menuentry 'Install LOADBALANCER' {
+    linuxefi boot/rockylinux9/vmlinuz ip=dhcp inst.repo=http://homepi.mark.lan/pxe/rockylinux9/BaseOS/x86_64/os inst.ks=http://homepi.mark.lan/pxe/rockylinux9/okdloadbalancer.cfg
+    initrdefi boot/rockylinux9/initrd.img
+}

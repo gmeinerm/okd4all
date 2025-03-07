@@ -1,0 +1,34 @@
+---
+
+- name: stop cluster proxmox-vms
+  community.general.proxmox_kvm:
+    api_password: "{{ pvepassword }}"
+    api_user: "{{ pveuser }}"
+    api_host: "{{ pveapihost }}"
+    vmid: "{{ hostvars[item].vmid }}"
+    node: "{{ hostvars[item].pxmnode }}"
+    state: stopped
+    force: true
+  failed_when: false
+  with_items:
+    - "{{ groups['clusternodes'] }}"
+
+
+- name: pause for 30 seconds
+  ansible.builtin.pause:
+    seconds: 30
+
+
+- name: delete proxmox-vms
+  community.general.proxmox_kvm:
+    api_password: "{{ pvepassword }}"
+    api_user: "{{ pveuser }}"
+    api_host: "{{ pveapihost }}"
+    vmid: "{{ hostvars[item].vmid }}"
+    node: "{{ hostvars[item].pxmnode }}"
+    state: absent
+    force: true
+  with_items:
+    - "{{ groups['clusternodes'] }}"
+
+

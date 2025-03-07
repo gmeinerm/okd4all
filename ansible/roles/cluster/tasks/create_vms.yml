@@ -1,0 +1,38 @@
+- name: create cluster proxmox-vms
+  community.general.proxmox_kvm:
+    api_password: "{{ pvepassword }}"
+    api_user: "{{ pveuser }}"
+    api_host: "{{ pveapihost }}"
+    name: "{{ hostvars[item].inventory_hostname_short }}"
+    vmid: "{{ hostvars[item].vmid }}"
+    node: "{{ hostvars[item].pxmnode }}"
+    virtio:
+      virtio0: 'pool1:{{ hostvars[item].disk }},format=raw'
+    bios: ovmf
+    efidisk0:
+      storage: pool1
+      format: raw
+      efitype: 4m
+      pre_enrolled_keys: 0
+    net:
+      net0: 'virtio={{ hostvars[item].macaddress }},bridge=vmbr0'
+    cores: "{{ hostvars[item].cores }}"
+    memory: "{{ hostvars[item].ram }}"
+    autostart: true
+    cpu: host
+    onboot: false
+  with_items:
+    - "{{ groups['clusternodes'] }}"
+
+
+
+- name: start cluster proxmox-vms
+  community.general.proxmox_kvm:
+    api_password: "{{ pvepassword }}"
+    api_user: "{{ pveuser }}"
+    api_host: "{{ pveapihost }}"
+    vmid: "{{ hostvars[item].vmid }}"
+    node: "{{ hostvars[item].pxmnode }}"
+    state: started
+  with_items:
+    - "{{ groups['clusternodes'] }}"

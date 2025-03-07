@@ -1,0 +1,24 @@
+---
+
+- name: prepare openshift-installer
+  import_tasks: prepare_ocpinstaller.yml
+  delegate_to: localhost
+  tags:
+    - never
+    - installer
+
+- name: prepare pxe-files
+  import_tasks: prepare_pxeboot.yml
+  tags:
+    - grubfiles
+
+- name: create proxmox-vms
+  import_tasks: create_vms.yml
+  tags:
+    - createvms
+
+- name: create proxmox-vms
+  import_tasks: delete_vms.yml
+  tags:
+    - never
+    - deletevms

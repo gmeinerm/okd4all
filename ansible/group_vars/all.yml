@@ -1,0 +1,54 @@
+pveapihost: "127.0.0.1"
+netmask: "255.255.255.0"
+gateway: "192.168.10.254"
+nameserver: "192.168.10.254"
+basedomain: "mark.lan"
+clustername: "okd"
+apiip: "192.168.10.134"
+cabundle: |
+  -----BEGIN CERTIFICATE-----
+  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
+  -----END CERTIFICATE-----
+tftphost: "homepi.mark.lan"
+tftppath: "/srv/tftp"
+sshpubkey: "ssh-ed25519 AAAAC...PUBKEY_EINSETZEN"
+reponame: "registry.okd.mark.lan"
+repoauth: "geheimerrepoauthtoken"
+ignitionurl: "http://homepi.mark.lan/okd/"
+ignitionpath: "/data/www/okd"
+ignitionhost: "homepi.mark.lan"
+ignitionuser: "root"
+
+pvepassword: geheimesproxmoxpw
+pveuser: root@pam
+pvehost: 192.168.10.109

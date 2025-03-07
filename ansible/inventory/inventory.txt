@@ -1,0 +1,12 @@
+[clusternodes]
+bootstrap.mark.lan vmid=199 macaddress="1A:E0:F8:00:10:00" ifname=ens18 diskname=vda role=bootstrap ipaddress=192.168.10.133 pxmnode=pve cores=4 ram=8192 disk=120
+master1.mark.lan vmid=201 macaddress="1A:E0:F8:00:10:01" ifname=ens18 diskname=vda role=master ipaddress=192.168.10.130 pxmnode=pve cores=4 ram=16384 disk=120
+master2.mark.lan vmid=202 macaddress="1A:E0:F8:00:10:02" ifname=ens18 diskname=vda role=master ipaddress=192.168.10.131 pxmnode=pve cores=4 ram=16384 disk=120
+master3.mark.lan vmid=203 macaddress="1A:E0:F8:00:10:03" ifname=ens18 diskname=vda role=master ipaddress=192.168.10.132 pxmnode=pve cores=4 ram=16384 disk=120
+
+[baremetalclusternodes]
+worker1.mark.lan macaddress="54:bf:64:9f:4d:df" ifname=eno1 diskname=sda role=worker ipaddress=192.168.10.135 
+ 
+
+[platform]
+192.168.10.109
