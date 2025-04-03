@@ -3,7 +3,7 @@
 LOCAL_REGISTRY='registry.ocp.mark.lan'
 LOCAL_REPOSITORY='openshift/okd'
 LOCAL_SECRET_JSON='auth.json'
-OCP_RELEASE='4.18.0-okd-scos.6'
+OCP_RELEASE='4.18.0-okd-scos.0'
 PRODUCT_REPO='okd'
 RELEASE_NAME='scos-release'
 
