@@ -34,7 +34,7 @@ https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshif
 https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
 ```
 
-in den files dieses projekts liegt ein entsprechendes script zum download und einlagern der installationsimages, konkret der version okd4.15. TODO: auf oc-mirror v2 umstellen
+in den files dieses projekts liegt ein entsprechendes script zum download und einlagern der installationsimages, konkret der version okd4.18. TODO: auf oc-mirror v2 umstellen
 
 dieses script extrahiert den openshift-installer. dieser (und NUR dieser) ist bei allen weiteren schritten zu verwenden.
 
@@ -94,7 +94,7 @@ der rest kommt direkt aus der dokumentation:
 ./openshift-install wait-for install-complete --log-level=debug
 ```
 
-
+einloggen, updaten, spass haben.
 
 
 
