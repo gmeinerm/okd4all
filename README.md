@@ -6,6 +6,45 @@
 - vorhandener dhcp/tftp-server und eingerichtete pxe-installationsumgebung für rockylinux oder rhel (developer-subscription googlen!) oder alma oder whatever. 
 - ein auf halbwegs potenter hardware installierter proxmox-ve-server oder ein paar ausgemusterte rechner. mischen geht auch. alles was pxe booten kann, mit ein paar cores, einer kleinen disk und ein bisschen ram (>8gb) gesegnet (und x86_64) ist, kann ein okd-node werden.
 
+## exkurs tftp vorbereiten - beispiel RHEL9
+```
+dnf download --downloadonly --downloaddir /root/packages grub2-efi-x64
+dnf download --downloadonly --downloaddir /root/packages shim-x64
+rpm2cpio shim-x64-15.8-4.el9_3.x86_64.rpm | cpio -dimv
+rpm2cpio grub2-efi-x64-2.06-94.el9_5.x86_64.rpm | cpio -dimv
+cp boot/efi/EFI/redhat/grubx64.efi /var/lib/tftpboot/
+cp boot/efi/EFI/redhat/shim.efi /var/lib/tftpboot/
+```
+```
+default-lease-time 300;
+max-lease-time 300;
+option subnet-mask 255.255.255.0;
+option domain-name-servers 192.168.10.254;
+option ntp-servers 192.168.10.254;
+
+allow booting;
+allow bootp;
+option space pxelinux;
+option pxelinux.magic code 208 = string;
+option pxelinux.configfile code 209 = text;
+option pxelinux.pathprefix code 210 = text;
+option pxelinux.reboottime code 211 = unsigned integer 32;
+option architecture-type code 93 = unsigned integer 16;
+
+
+subnet 192.168.10.0 netmask 255.255.255.0 {
+  option routers 192.168.10.254;
+  option broadcast-address 192.168.10.255;
+  option domain-search "mark.lan";
+  range 192.168.10.200 192.168.10.210;
+  class "pxeclients" {
+     match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+     next-server 192.168.10.159;
+     filename "shim.efi";
+   }
+}
+```
+
 
 ## voraussetzungen schaffen:
 wer alles nötige bei sich im haus haben will kann die installationsquellen seiner bevorzugten linux-enterprise-distribution sowie das okd-quell-repository bei sich einlagern. das ist noch einige meter von einer fully-airgapped-installation entfernt, aber immerhin ein anfang.
